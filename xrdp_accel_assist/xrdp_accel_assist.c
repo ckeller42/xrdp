@@ -1027,5 +1027,8 @@ main(int argc, char **argv)
         }
     }
     LOG(LOG_LEVEL_INFO, "exit");
+    /* destroy the encoder sessions before exit(): with live NVENC sessions
+     * an exit handler in NVIDIA's libnvcuvid can deadlock (Linux driver) */
+    xrdp_accel_assist_x11_delete_all_pixmaps();
     return 0;
 }
